@@ -72,3 +72,62 @@ def bfs(graph: List[List[int]], s: int) -> List[bool]:
             todo.append(x)
 
     return seen
+
+
+def bfs_shortest_path(graph: List[List[int]], s: int) -> List[int]:
+    """
+    幅優先探索で最短路を求める (code 13.3)
+
+    入力: グラフ G と、探索の始点 s
+    出力: s から各頂点への最短路長を表す配列
+
+    Args:
+        graph: 隣接リスト表現のグラフ
+        s: 始点
+
+    Returns:
+        dist: 各頂点への最短距離
+              dist[v] = 始点sから頂点vまでの最短距離
+              到達不可能な場合は -1
+
+    例:
+        graph = [
+            [1, 2],    # 0 -> 1, 2
+            [3],       # 1 -> 3
+            [3],       # 2 -> 3
+            []         # 3 -> なし
+        ]
+        bfs_shortest_path(graph, 0) -> [0, 1, 1, 2]
+        # 0->0: 0, 0->1: 1, 0->2: 1, 0->3: 2
+    """
+    N = len(graph)
+
+    # 全頂点を「未訪問」に初期化
+    dist = [-1] * N
+
+    # キュー
+    que = deque()
+
+    # 初期条件（頂点 0 を初期頂点とする）
+    dist[0] = 0
+
+    # 0 を橙色頂点にする
+    que.append(0)
+
+    # BFS 開始（キューが空になるまで探索を行う）
+    while que:
+        # キューから先頭頂点を取り出す
+        v = que.popleft()
+
+        # v からたどれる頂点をすべて調べる
+        for x in graph[v]:
+            # すでに発見済みの頂点は探索しない
+            if dist[x] != -1:
+                continue
+
+            # 新たな頂点 x について距離情報を記録してキューに挿入
+            dist[x] = dist[v] + 1
+            que.append(x)
+
+    return dist
+
