@@ -77,6 +77,7 @@ def is_bipartite(graph: List[List[int]]) -> bool:
                 continue
 
             # 隣接頂点の色を変えて、再帰的に探索
+            # 1 - curとすることで色を交互に指定可能
             # false が返ってきたら false を返す
             if not dfs(next_v, 1 - cur):
                 return False
