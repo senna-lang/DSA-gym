@@ -78,6 +78,7 @@ def floydWarshall(edges: list[tuple[int, int, float]]) -> tuple[list[list[float]
 
     # Check for negative cycle
     # If dp[v][v] < 0, there's a negative cycle containing vertex v
+    # Because we can go from v back to v with negative total weight
     has_negative_cycle = False
     for v in range(N):
         if dp[v][v] < 0:
