@@ -27,10 +27,53 @@ When to use:
 - When edges are already sorted or can be efficiently sorted
 """
 
-from unionFind import UnionFind
+"""
+Union-Find
+"""
+
+class UnionFind:
+    """Union-Find (Disjoint Set Union) data structure"""
+    
+    def __init__(self, n: int) -> None:
+        self.par = [-1] * n
+        self.siz = [1] * n
+    
+    def root(self, x: int) -> int:
+        """Find root with path compression"""
+        if self.par[x] == -1:
+            return x
+        else:
+            self.par[x] = self.root(self.par[x])
+            return self.par[x]
+    
+    def isSame(self, x: int, y: int) -> bool:
+        """Check if x and y are in the same component"""
+        return self.root(x) == self.root(y)
+    
+    def unite(self, x: int, y: int) -> bool:
+        """Unite components containing x and y"""
+        x = self.root(x)
+        y = self.root(y)
+        
+        if x == y:
+            return False
+        
+        if self.siz[x] < self.siz[y]:
+            x, y = y, x
+        
+        self.par[y] = x
+        self.siz[x] += self.siz[y]
+        
+        return True
+    
+    def size(self, x: int) -> int:
+        """Get size of component containing x"""
+        return self.siz[self.root(x)]
 
 
-def kruskal(n: int, edges: list[tuple[int, int, int]]) -> tuple[int, list[tuple[int, int, int]]]:
+def kruskal(
+    n: int, edges: list[tuple[int, int, int]]
+) -> tuple[int, list[tuple[int, int, int]]]:
     """
     Finds the Minimum Spanning Tree using Kruskal's algorithm.
 
