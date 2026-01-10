@@ -27,11 +27,6 @@ When to use:
 - When edges are already sorted or can be efficiently sorted
 """
 
-import sys
-import os
-
-# Add the data-structure directory to the path to import UnionFind
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../data-structure/structures'))
 from unionFind import UnionFind
 
 
