@@ -1,4 +1,5 @@
 # Complexity: O(N)
+# https://leetcode.com/problems/palindrome-number/submissions/1887351588
 class MySolution:
     def isPalindrome(self, x: int) -> bool:
         strX = str(x)
